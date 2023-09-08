@@ -43,6 +43,7 @@ import androidx.window.WindowManager
 import com.android.example.cameraxbasic.KEY_EVENT_ACTION
 import com.android.example.cameraxbasic.KEY_EVENT_EXTRA
 import com.android.example.cameraxbasic.R
+import com.android.example.cameraxbasic.analyzer.ScanAnalyzer
 import com.android.example.cameraxbasic.databinding.CameraUiContainerBinding
 import com.android.example.cameraxbasic.databinding.FragmentCameraBinding
 import com.android.example.cameraxbasic.utils.ANIMATION_FAST_MILLIS
@@ -297,11 +298,8 @@ class CameraFragment : Fragment() {
                 .build()
                 // The analyzer can then be assigned to the instance
                 .also {
-                    it.setAnalyzer(cameraExecutor, LuminosityAnalyzer { luma ->
-                        // Values returned from our analyzer are passed to the attached listener
-                        // We log image analysis results here - you should do something useful
-                        // instead!
-                        Log.d(TAG, "Average luminosity: $luma")
+                    it.setAnalyzer(cameraExecutor, ScanAnalyzer(viewLifecycleOwner, 1f) {
+                        Log.w("SCAN RESULT", "RESULT: $it")
                     })
                 }
 
